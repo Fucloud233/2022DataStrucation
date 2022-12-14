@@ -27,7 +27,7 @@ public:
 
     // insert elem
     bool insertNode(const T& node);
-    void insertLine(const T& a, const T& b);
+    void insertEdge(const T& a, const T& b);
 
     // get the size of lines and nodes
     int sizeOfLines() const;
@@ -90,7 +90,7 @@ bool UndirectedGraph<T>::find(const Line<T>& line){
 }
 
 template<class T>
-void UndirectedGraph<T>::insertLine(const T& a, const T& b){
+void UndirectedGraph<T>::insertEdge(const T& a, const T& b){
     // whether the nodes exist or not, if not inset it
     if(!this->find(a)){
         this->insertNode(a);
@@ -152,7 +152,7 @@ namespace testfun{
         // insert the lines
         for(int i=0;i<m;i++){
             Line<int> line = lines[i];
-            graph.insertLine(line.begin, line.end);
+            graph.insertEdge(line.begin, line.end);
         }   
 
         graph.insertNode(10);
@@ -187,7 +187,7 @@ int main(){
         int a, b;
         cin>>a>>b;
         
-        graph.insertLine(a, b);
+        graph.insertEdge(a, b);
     }
 
     cout<<graph.sizeOfLines()<<endl;
