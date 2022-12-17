@@ -15,13 +15,13 @@ struct Line{
 };
 
 template<class T>
-class UndirectedGraph{
+class WDiGraph{
 private:
     int maxNodeNum;
     map<T, int> nodes;
     T** data;
 public:
-    UndirectedGraph(int n=0);
+    WDiGraph(int n=0);
     bool find(const T& node);
     bool find(const Line<T>& line);
 
@@ -40,7 +40,7 @@ public:
 };
 
 template<class T>
-UndirectedGraph<T>::UndirectedGraph(int maxNodeNum){
+WDiGraph<T>::WDiGraph(int maxNodeNum){
     // initialize the data matrix
     data = new T*[maxNodeNum];
     for(int i=0;i<maxNodeNum;i++){
@@ -54,7 +54,7 @@ UndirectedGraph<T>::UndirectedGraph(int maxNodeNum){
 }
 
 template<class T>
-bool UndirectedGraph<T>::insertNode(const T& node){
+bool WDiGraph<T>::insertNode(const T& node){
     // not exist
     if(!this->find(node)){
         if(nodes.size()>=maxNodeNum){
@@ -73,12 +73,12 @@ bool UndirectedGraph<T>::insertNode(const T& node){
 }
 
 template<class T>
-bool UndirectedGraph<T>::find(const T& node){
+bool WDiGraph<T>::find(const T& node){
     return nodes.find(node)!=nodes.end();
 }
 
 template<class T>
-bool UndirectedGraph<T>::find(const Line<T>& line){
+bool WDiGraph<T>::find(const Line<T>& line){
     const T& l = line.begin; 
     const T& r = line.end;
     if(this->find(l)&&this->find(r)){
@@ -90,7 +90,7 @@ bool UndirectedGraph<T>::find(const Line<T>& line){
 }
 
 template<class T>
-void UndirectedGraph<T>::insertEdge(const T& a, const T& b){
+void WDiGraph<T>::insertEdge(const T& a, const T& b){
     // whether the nodes exist or not, if not inset it
     if(!this->find(a)){
         this->insertNode(a);
@@ -104,7 +104,7 @@ void UndirectedGraph<T>::insertEdge(const T& a, const T& b){
 }
 
 template<class T>
-void UndirectedGraph<T>::print() const{
+void WDiGraph<T>::print() const{
     for(auto it1=nodes.begin();it1!=nodes.end();it1++){
         for(auto it2=nodes.begin();it2!=nodes.end();it2++){
             cout<<data[it1->second][it2->second]<<' ';
@@ -114,7 +114,7 @@ void UndirectedGraph<T>::print() const{
 }
 
 template<class T>
-int UndirectedGraph<T>::sizeOfLines() const{
+int WDiGraph<T>::sizeOfLines() const{
     int size = 0;
     for(int i=0;i<maxNodeNum;i++){
         for(int j=i+1;j<maxNodeNum;j++){
@@ -126,12 +126,12 @@ int UndirectedGraph<T>::sizeOfLines() const{
 }
 
 template<class T>
-int UndirectedGraph<T>::sizeOfNodes() const{
+int WDiGraph<T>::sizeOfNodes() const{
     return nodes.size();
 }
 
 template<class T>
-int UndirectedGraph<T>::degree(const T& node) {
+int WDiGraph<T>::degree(const T& node) {
     int index = nodes[node];
     int degree = 0;
     for(int i=0;i<maxNodeNum;i++){
@@ -144,7 +144,7 @@ int UndirectedGraph<T>::degree(const T& node) {
 namespace testfun{
     void UndirectedGrapTest(){
         int n = 4, m = 7;
-        UndirectedGraph<int> graph(n);
+        WDiGraph<int> graph(n);
         Line<int> lines[] = {{2, 4}, {1, 3}, {2, 1}, {1, 4},
                 {4, 2}, {4, 1}, {2, 1}
             };
@@ -182,7 +182,7 @@ int main(){
 
     int n, m;
     cin>>n>>m;
-    UndirectedGraph<int> graph(n);
+    WDiGraph<int> graph(n);
     for(int i=0;i<m;i++){
         int a, b;
         cin>>a>>b;

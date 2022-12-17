@@ -17,7 +17,7 @@ struct Edge{
 };
 
 template<class T>
-class UndirectedGraph{
+class WUnDiGraph{
 private:
     int maxNodeNum;
     map<T, int> nodes;
@@ -26,7 +26,9 @@ private:
     // depth-first-search
     void DFS(const T& elem, bool* visted, vector<T>& result);
 public:
-    UndirectedGraph(int n=0);
+    WUnDiGraph(int n=0);
+    WUnDiGraph(T* elems, int** data, int size);
+    
     bool find(const T& node);
     bool find(const Edge<T>& edge);
 
@@ -45,11 +47,13 @@ public:
     vector<T> DFSTraverse(const T& elem=T());
     vector<T> BFSTraverse(const T& elem=T());
 
+    
+
     void print() const;
 };
 
 template<class T>
-void UndirectedGraph<T>::DFS(const T& elem, bool* visited, vector<T>& result){
+void WUnDiGraph<T>::DFS(const T& elem, bool* visited, vector<T>& result){
     // index->current index, visted->record the index has been travsed
     const int& current = nodes[elem];
     if(visited[current]){
@@ -69,7 +73,7 @@ void UndirectedGraph<T>::DFS(const T& elem, bool* visited, vector<T>& result){
 }
 
 template<class T>
-vector<T> UndirectedGraph<T>::DFSTraverse(const T& elem){
+vector<T> WUnDiGraph<T>::DFSTraverse(const T& elem){
     if(!find(elem)&&elem!=T()){
         cerr<<"[Error] "<<elem<<" dones't exist!";
         exit(-1);
@@ -91,7 +95,7 @@ vector<T> UndirectedGraph<T>::DFSTraverse(const T& elem){
 }
 
 template<class T>
-vector<T> UndirectedGraph<T>::BFSTraverse(const T& elem){
+vector<T> WUnDiGraph<T>::BFSTraverse(const T& elem){
     if(!find(elem)&&elem!=T()){
         cerr<<"[Error] "<<elem<<" dones't exist!";
         exit(-1);
@@ -138,7 +142,7 @@ vector<T> UndirectedGraph<T>::BFSTraverse(const T& elem){
 }
 
 template<class T>
-UndirectedGraph<T>::UndirectedGraph(int maxNodeNum){
+WUnDiGraph<T>::WUnDiGraph(int maxNodeNum){
     // initialize the data matrix
     data = new T*[maxNodeNum];
     for(int i=0;i<maxNodeNum;i++){
@@ -152,7 +156,24 @@ UndirectedGraph<T>::UndirectedGraph(int maxNodeNum){
 }
 
 template<class T>
-bool UndirectedGraph<T>::insertNode(const T& node){
+WUnDiGraph<T>::WUnDiGraph(T* elems, int** data, int nodeNum){
+    data = new T*[nodeNum];
+    for(int i=0;i<nodeNum;i++){
+        data[i] = new T[nodeNum];
+        for(int j=0;j<nodeNum;j++){
+            data[i][j] = data[i][j];
+        }
+    }
+
+    for(int i=0;i<nodeNum;i++){
+        nodes.insert({elem[i], i});
+    }
+    
+    this->maxNodeNum = nodeNum;
+}
+
+template<class T>
+bool WUnDiGraph<T>::insertNode(const T& node){
     // not exist
     if(!this->find(node)){
         if(nodes.size()>=maxNodeNum){
@@ -171,12 +192,12 @@ bool UndirectedGraph<T>::insertNode(const T& node){
 }
 
 template<class T>
-bool UndirectedGraph<T>::find(const T& node){
+bool WUnDiGraph<T>::find(const T& node){
     return nodes.find(node)!=nodes.end();
 }
 
 template<class T>
-bool UndirectedGraph<T>::find(const Edge<T>& line){
+bool WUnDiGraph<T>::find(const Edge<T>& line){
     const T& l = line.begin; 
     const T& r = line.end;
     if(this->find(l)&&this->find(r)){
@@ -188,7 +209,7 @@ bool UndirectedGraph<T>::find(const Edge<T>& line){
 }
 
 template<class T>
-void UndirectedGraph<T>::insertEdge(const T& a, const T& b){
+void WUnDiGraph<T>::insertEdge(const T& a, const T& b){
     // whether the nodes exist or not, if not inset it
     if(!this->find(a)){
         this->insertNode(a);
@@ -202,12 +223,12 @@ void UndirectedGraph<T>::insertEdge(const T& a, const T& b){
 }
 
 template<class T>
-void UndirectedGraph<T>::insertEdge(const Edge<T>& edge){
+void WUnDiGraph<T>::insertEdge(const Edge<T>& edge){
     insertEdge(edge.begin, edge.end);
 }
 
 template<class T>
-void UndirectedGraph<T>::print() const{
+void WUnDiGraph<T>::print() const{
     for(auto it1=nodes.begin();it1!=nodes.end();it1++){
         for(auto it2=nodes.begin();it2!=nodes.end();it2++){
             cout<<data[it1->second][it2->second]<<' ';
@@ -217,7 +238,7 @@ void UndirectedGraph<T>::print() const{
 }
 
 template<class T>
-int UndirectedGraph<T>::sizeOfLines() const{
+int WUnDiGraph<T>::sizeOfLines() const{
     int size = 0;
     for(int i=0;i<maxNodeNum;i++){
         for(int j=i+1;j<maxNodeNum;j++){
@@ -229,12 +250,12 @@ int UndirectedGraph<T>::sizeOfLines() const{
 }
 
 template<class T>
-int UndirectedGraph<T>::sizeOfNodes() const{
+int WUnDiGraph<T>::sizeOfNodes() const{
     return nodes.size();
 }
 
 template<class T>
-int UndirectedGraph<T>::degree(const T& node) {
+int WUnDiGraph<T>::degree(const T& node) {
     int index = nodes[node];
     int degree = 0;
     for(int i=0;i<maxNodeNum;i++){
@@ -255,7 +276,7 @@ namespace testfun{
 
     void UndirectedGrapTest(){
         int n = 4, m = 7;
-        UndirectedGraph<int> graph(n);
+        WUnDiGraph<int> graph(n);
         Edge<int> lines[] = {{2, 4}, {1, 3}, {2, 1}, {1, 4},
                 {4, 2}, {4, 1}, {2, 1}
             };
@@ -286,7 +307,7 @@ namespace testfun{
 
     void TravserseTest(){
         int n = 5, m = 7;
-        UndirectedGraph<int> graph(n);
+        WUnDiGraph<int> graph(n);
         Edge<int> edges[] = {{1, 2}, {1, 3}, {1, 4},
                 {2, 4}, {2, 5}, {3, 5}, {4, 5}
             };
@@ -302,11 +323,11 @@ namespace testfun{
         const vector<int>& BFSArr = graph.BFSTraverse(1);
         print(BFSArr);
     }
-  
+    
     void solver(){
         int n, m;
         cin>>n>>m;
-        UndirectedGraph<int> graph(n);
+        WUnDiGraph<int> graph(n);
 
         int a, b, w;
         for(int i=0;i<m;i++){
