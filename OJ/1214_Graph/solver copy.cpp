@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <vector>
 
  
 using namespace std;
@@ -20,11 +21,25 @@ struct edge{
 	int begin;
 	int end;
 	int weight;
+	
+	edge(){
+		begin = 0;
+		end = 0; 
+		weight = 0;
+	}
+
+	edge(int a, int b, int w){
+		begin = a;
+		end = b;
+		weight = w;
+	}
 };
  
 const int maxn = 110;
 int father[maxn];
-edge e[maxn*maxn];
+// edge e[maxn*maxn];
+
+vector<edge> e;
 int map[maxn][maxn];
 int n,m;
  
@@ -36,24 +51,60 @@ int find(int x){
 	father[x] = find(father[x]);
 	return father[x];
 }
+
+class UnionFind{
+private:
+    int *leader;
+    int size;
+
+public:
+    UnionFind(int size){
+        size++;
+
+        leader = new int[size];
+        for(int i=0;i<size;i++){
+            leader[i] = i;
+        }
+
+        this->size = size;
+    }
+
+    ~UnionFind(){
+        delete leader;
+    }
+
+    int find(int x){
+        if(x==leader[x]){
+            return x;
+        }
+
+        leader[x] = find(leader[x]);
+        return leader[x];
+    }
+
+    void connect(int p, int q){
+        leader[find(p)] = find(q);
+    }
+};
  
-int kruscal(int start){//使用kruscal算法来生成最小生成树并计算带权路径和
+int kruscal(vector<edge> edges, int size, int start){//使用kruscal算法来生成最小生成树并计算带权路径和
 	int i;
 	int sum = 0;//用sum来记录最小s生成树的边权和
     int max = numeric_limits<int>::min();
     int min = numeric_limits<int>::max();
     int count = 0;
  
-	for( i = 1 ; i < maxn ; ++i){
-		father[i] = i;
-	}
- 
+	UnionFind u(n);
+
 	for( i = start ; i <= m ; ++i){//枚举有序边集中的每一条边
-		int fx = find(e[i].begin);
-		int fy = find(e[i].end);
+		edge E = e[i];
+		int fx = u.find(E.begin);
+		int fy = u.find(E.end);
  
 		if(fx != fy){//若第k条边的两个端点i,j 分别属于两颗不同的子树
-			father[fx] = fy;//则将节点i所在的子树并入节点j所在的子树中
+			
+			u.connect(E.begin, E.end);
+			// father[fx] = fy;//则将节点i所在的子树并入节点j所在的子树中
 			sum += e[i].weight;
  
  
@@ -93,13 +144,20 @@ int main(){
     string resultFile = fileDir + "ans_" + to_string(num) + ".txt";
     file.open(dataFile);
     cout<<"Example "<<num<<endl;
-
+	
+	vector<edge> edges;
+	edges.push_back(edge);
 	file>>n>>m;
+	e.push_back(edge());
 	int i,j;
 	for(i = 1 ; i <= m ; ++i){
-		file>>e[i].begin>>e[i].end>>e[i].weight;
+		// file>>e[i].begin>>e[i].end>>e[i].weight;
+		int a, b, w;
+		file>>a>>b>>w;
+		edges.push_back(edge(a, b, w));
+
 	}
-	sort(e+1,e+m+1,compare);//kruscal算法要求边有序..特别需要注意的是排序的起点和终点
+	sort(e.begin()+1,e.end(),compare);//kruscal算法要求边有序..特别需要注意的是排序的起点和终点
 
     // calculate the result
     int slim = numeric_limits<int>::max();
