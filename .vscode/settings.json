@@ -5,6 +5,10 @@
         "iostream": "cpp",
         "algorithm": "cpp",
         "xmemory": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "limits": "cpp",
+        "atomic": "cpp"
     }
 }
