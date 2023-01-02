@@ -19,7 +19,7 @@ int main()
 	cout<<endl;
 
 
-	// ˳��ջ 
+	// 顺序栈 
 //	SeqStack<int> s;
 //	for(int i=0;i<4;i++)
 //		s.push(i);
