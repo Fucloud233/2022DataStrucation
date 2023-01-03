@@ -9,6 +9,13 @@
         "tuple": "cpp",
         "utility": "cpp",
         "limits": "cpp",
-        "atomic": "cpp"
+        "atomic": "cpp",
+        "iosfwd": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "xhash": "cpp",
+        "xstring": "cpp",
+        "xtree": "cpp",
+        "ostream": "cpp"
     }
 }
