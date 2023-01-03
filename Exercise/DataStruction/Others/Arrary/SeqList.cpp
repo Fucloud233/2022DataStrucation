@@ -53,6 +53,8 @@ template<class T>
 T& SeqList<T>::get(int index) const{
     if(index>num){
         cerr<<"[Error] 下标越界 获取失败"<<endl;
+        exit(-1);
+        // return T();
     }
 
     return data[index];
