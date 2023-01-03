@@ -25,7 +25,7 @@ public:
 		listSize = len;
 	}
 		
-	// ²åÈë½Úµã 
+	// ï¿½ï¿½ï¿½ï¿½Úµï¿½ 
 	int insertNode(T elem, int index)
 	{
 		if(index<0||index>listSize)
@@ -51,7 +51,7 @@ public:
 		insertNode(elem, listSize);
 	}
 		
-	//É¾³ý½Úµã 
+	//É¾ï¿½ï¿½ï¿½Úµï¿½ 
 	int deleteNode(int index)
 	{
 		if(index<0||index>listSize)
@@ -74,7 +74,7 @@ public:
 		delete delete_node;
 	}
 		
-	// Á´½ÓÁ´±í 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	int addList(LinkList<T> list)
 	{
 		if(list.isEmpty())
@@ -90,7 +90,7 @@ public:
 		listSize += list.getSize();
 	}
 		
-	//µ¹×ªÁ´±í 
+	//ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ 
 	void reverse()
 	{
 		Node<T> *result, *save;
@@ -98,13 +98,13 @@ public:
 			
 		while(head)
 		{
-			//Ê×ÏÈ±£ÁôÊ×½ÚµãÒÔÎªµÄ½Úµã 
+			//ï¿½ï¿½ï¿½È±ï¿½ï¿½ï¿½ï¿½×½Úµï¿½ï¿½ï¿½Îªï¿½Ä½Úµï¿½ 
 			save = head->next;
-			//ÔÚµÚÒ»¸ö½ÚµãºóÃæ×·¼Ó½Úµã 
+			//ï¿½Úµï¿½Ò»ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½×·ï¿½Ó½Úµï¿½ 
 			head->next = result;
-			//È»ºóÌí¼Ó½ø½á¹ûÁ´±íÖÐ 
+			//È»ï¿½ï¿½ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 			result = head;
-			//×îºó½«Ê£ÓàµÄ½ÚµãËÍ»ØÔ­´¦ 
+			//ï¿½ï¿½ï¿½Ê£ï¿½ï¿½Ä½Úµï¿½ï¿½Í»ï¿½Ô­ï¿½ï¿½ 
 			head =save;
 		}
 		head = result;
@@ -117,7 +117,7 @@ public:
 			insertNode(*word++, i++);
 	}
 		
-	// ÅÐ¶ÏÊÇ·ñÎª¿Õ 
+	// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ 
 	bool isEmpty()
 	{
 		if(listSize==0)
@@ -126,7 +126,7 @@ public:
 			return false;
 	}
 		
-	// µÃµ½Á´±í´óÐ¡ 
+	// ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ 
 	int getSize()
 	{
 		return listSize;
@@ -150,7 +150,7 @@ public:
 		}
 	}
 		
-	// ´òÓ¡Êý×é 
+	// ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ 
 	void printList()
 	{
 		if(listSize==0)
