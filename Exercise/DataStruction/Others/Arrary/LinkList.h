@@ -7,7 +7,7 @@ using namespace std;
 
 template<class T>
 class LinkList: public LinearList<T>{
-private:
+protected:
     Node<T>* header;
     int listSize;
 public:
@@ -28,7 +28,17 @@ public:
     int size() const;
 
     T& operator[](int index);
+
+    // 重载运算符 (此处必须声明该函数为模板函数 因为他不是成员函数)
+    template<class Type>
+    friend ostream& operator<<(ostream& out, const LinkList<Type>& list);
 };
+
+template<class T>
+ostream& operator<<(ostream& out, const LinkList<T>& list){
+    list.output(out);
+    return out;
+}
 
 template<class T>
 void LinkList<T>::reverse(){
@@ -99,7 +109,7 @@ LinkList<T>::LinkList(int size){
 
 template<class T>
 LinkList<T>::~LinkList(){
-    while(header){
+    for(int i=0;i<listSize;i++) {
         Node<T>* temp = header->next;
         delete header;
         header = temp;
@@ -184,15 +194,23 @@ int LinkList<T>::indexOf(const T& elem) const{
 template<class T>
 void LinkList<T>::output(ostream& out) const {
     Node<T>* p = header->next;
-    while(p){
+    // 不能使用While循环 应修改为for循环
+    // 在循环链表中 会出现死循环的现象
+    for(int i=0;i<listSize;i++) {
         cout<<p->elem<<' ';
         p = p->next;
     }
-    cout<<endl;
+    // cout<<endl;
 }
 
 template<class T>
 T& LinkList<T>::operator[](int index){
+    if(index<0||index>listSize){
+        cerr<<"[Error] 下标越界 访问失败"<<endl;
+        exit(-1);
+        // return T();
+    }
+
     Node<T>* p = header->next;
     for(int i=0;i<index;i++){
         p = p->next;
@@ -211,10 +229,12 @@ namespace List{
             data.insert(i, arr[i]);
         }
         data.output(cout);
+        cout<<endl;
         
         // 删除元素
         data.erase(2);
         data.output(cout);
+        cout<<endl;
 
         // 添加元素
         data.insert(4, 10);

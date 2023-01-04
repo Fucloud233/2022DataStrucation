@@ -16,6 +16,9 @@
         "xhash": "cpp",
         "xstring": "cpp",
         "xtree": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "initializer_list": "cpp",
+        "xiosbase": "cpp",
+        "xlocale": "cpp"
     }
 }
